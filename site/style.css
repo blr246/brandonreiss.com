@@ -145,6 +145,12 @@ div.assignment {
 }
 div.assignment img {
   width:256px;
+  /* These <img> tags carry width/height attributes so the browser can
+     reserve the right box before the PNG loads. Without the height:auto
+     below, the raw pixel height from the attribute would apply once
+     width:256px has overridden the width attribute, squashing e.g. a
+     640x480 picture into a 256x480 one. auto keeps the aspect ratio. */
+  height:auto;
   margin:0px;
   padding:0px;
 }
