@@ -13,7 +13,7 @@
  * naive "rm -rf + copy" rewrites all 173 files on every save, which makes the
  * watcher fire hundreds of spurious reload events per keystroke.
  */
-import { cp, mkdir, readdir, rm, stat } from "node:fs/promises";
+import { cp, mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,10 +71,13 @@ for (const rel of srcFiles) {
   }
 }
 
-// Remove files deleted from the source.
+// Remove files deleted from the source. Generated artifacts are exempt so
+// they are not deleted and re-created (which would fire watcher events).
+const GENERATED = new Set(["sitemap.xml"]);
 const srcSet = new Set(srcFiles);
 let deleted = 0;
 for (const rel of destFiles) {
+  if (GENERATED.has(rel)) continue;
   if (!srcSet.has(rel)) {
     await rm(path.join(dest, rel), { force: true });
     deleted++;
@@ -93,11 +96,41 @@ async function pruneEmptyDirs(dir) {
 }
 if (deleted > 0) await pruneEmptyDirs(dest);
 
+// --- sitemap ---------------------------------------------------------------
+// Generated from the tree rather than hand-maintained, so it cannot go stale.
+// Every directory index becomes a trailing-slash URL; standalone content
+// pages that are not index.html are listed explicitly. resume/resume.html is
+// intentionally absent — it is fetched into resume/index.html via $.get and
+// is not a page anyone navigates to.
+const CANONICAL_ORIGIN = "https://brandonreiss.com";
+const EXTRA_URLS = ["/graphics/aboutme.html"];
+
+const urls = new Set();
+for (const rel of srcFiles) {
+  const posix = rel.split(path.sep).join("/");
+  if (posix === "index.html") urls.add("/");
+  else if (posix.endsWith("/index.html")) urls.add("/" + posix.slice(0, -"index.html".length));
+}
+for (const u of EXTRA_URLS) urls.add(u);
+
+const sitemap =
+  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  [...urls]
+    .sort()
+    .map((u) => `  <url><loc>${CANONICAL_ORIGIN}${u}</loc></url>\n`)
+    .join("") +
+  "</urlset>\n";
+
+await mkdir(dest, { recursive: true });
+await writeFile(path.join(dest, "sitemap.xml"), sitemap, "utf8");
+
 const ms = Date.now() - t0;
 const summary = [
   copied ? `${copied} copied` : null,
   skipped ? `${skipped} unchanged` : null,
   deleted ? `${deleted} removed` : null,
+  `sitemap ${urls.size} urls`,
 ]
   .filter(Boolean)
   .join(", ");

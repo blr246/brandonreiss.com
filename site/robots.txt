@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /lib/
+
+Sitemap: https://brandonreiss.com/sitemap.xml

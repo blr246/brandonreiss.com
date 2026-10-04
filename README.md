@@ -3,8 +3,9 @@
 Source and build pipeline for <https://brandonreiss.com>.
 
 The live site is a set of static files using **root-absolute paths** (`/style.css`,
-`/lib/`, `/graphics/`), so there is no bundler and no framework — the "build" is a
-byte-faithful copy of `site/` into `dist/`.
+`/lib/`, `/graphics/`), so there is no bundler and no framework. The build copies
+`site/` into `dist/` byte-for-byte, then generates `sitemap.xml` from the tree
+so the sitemap can never go stale.
 
 ## Quick start
 
@@ -41,7 +42,22 @@ Two datasets are intentionally excluded (`.gitignore` plus build exclusions):
 - **`site/noweats/data/`** — ~37k objects, ~147 MB
 - **`site/private/`** — ~1.2 GB of personal media
 
-`dist/` therefore contains only the **173 files, 3.1 MB** that make up the public site.
+`dist/` therefore contains only the **173 files, 3.1 MB** that make up the public
+site, plus the generated `sitemap.xml`.
+
+## Standards
+
+Every HTML file now carries `<!doctype html>`, `<meta charset="utf-8">`, a
+`viewport` meta, `<html lang="en">`, and a favicon link. The six standalone
+content pages additionally carry a `meta description`, a `rel=canonical`
+pointing at `https://brandonreiss.com`, and Open Graph tags.
+
+`robots.txt` keeps its original `Disallow: /lib/` and now advertises the
+generated sitemap.
+
+Deliberately **not** tagged for SEO: `resume/resume.html` (injected into
+`resume/index.html` via `$.get`, so its `<head>` is discarded) and the bare
+`hw0X.html` applet stubs.
 
 ## Local proxy for the excluded datasets
 
