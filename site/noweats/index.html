@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>noweats</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="noweats.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">noweats</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="main">
+        <div>
+          <h2>Hello, Twitter<h2>
+        </div>
+
+        <div>
+          <div style="float:left">
+            <h4>What are you eating over the past hour (in NYC)?</h4>
+          </div>
+          <div style="float:right">
+            <div style="text-align:right"><h4>Last updated<h4></div>
+            <div id="last-updated"></div>
+          </div>
+        </div>
+
+        <div id="date-selector" style="clear:both"></div>
+        <div style="height:1.0em;width:1px"></div>
+
+        <div id="counts">
+          <table id="counts" class="tablesorter">
+            <thead>
+              <tr>
+                <th class="food">food</th>
+                <th class="count">#</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="left-spacer" style="width:3em;height:1px"></div>
+        <div id="interesting" style="width:450px;"></div>
+
+        <div style="height:1em;width:1px;clear:both;"></div>
+
+        <hr>
+
+        <div>
+          <h3>About</h3>
+        </div>
+        <div>
+          <p>Noweats scrapes <a href="http://twitter.com">Twitter</a> for
+          tracks involving eating in the NYC area.  It uses the <a
+            href="http://nltk.org">Natural Language Toolkit</a> to analyze
+          tweet data and extract noun phrases that indicate what people are
+          eating. Each hour it aggregates the extracted noun phrases into a
+          table and also extracts some interesting food noun phrases to
+          display.</p>
+          <p>The site owner is not responsible for any vulgar or offensive
+          content appearing in the results. This content is scraped directly
+          from Twitter, and no NLP technique is capable of filtering all such
+          content since machines cannot understand natural language.</p>
+          <p>For source code, please visit the <a
+            href="http://github.com/blr246/noweats">noweats github</a>.</p>
+        </div>
+
+        <div class="footer">
+          <p>&copy; 2014 <a href="http://www.brandonreiss.com">Brandon L. Reiss</a></p>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Include the tablesorter plugin. -->
+    <script src="js/jquery.tablesorter.min.js"></script>
+    <!-- Include noweats application. -->
+    <script src="js/noweats.js"></script>
+
+    <script type="text/javascript">
+      var table = $("table#counts");
+      var tbody = table.children("tbody");
+
+      table.tablesorter({ sortList: [[1, 1], [0, 0]] });
+
+      getDataList(function(dataList) {
+        var lastLoaded = undefined;
+        var changeData = function(dataIdx) {
+          var path = "data/" + dataList[dataIdx];
+          if (path != lastLoaded) {
+            loadData(path); 
+            lastLoaded = path;
+          }
+        };
+
+        var maxIdx = dataList.length - 1;
+
+        var dateSelector = $("#date-selector");
+        dateSelector.slider({
+            min: 0,
+            max: maxIdx,
+            slide: function(e, ui){
+              changeData(ui.value);
+            }
+        });
+
+        // Animate slider. Acceleration should get us across in animS.
+        //   0.5 * accel * animS^2 = maxIdx
+        //   accel = (2 * maxIdx) / animS
+        //   step = accel * stepDelayMs / 1000
+        var stepDelayMs = 20
+        var animS = 1.5
+        var accel = 2 * maxIdx / animS
+        var step = 0
+        var currentIdx = 0;
+        var animateSlider = function() {
+          if (currentIdx < maxIdx) {
+            t = step * stepDelayMs / 1000
+            currentIdx = Math.min(0.5 * accel * (t * t), maxIdx)
+            dateSelector.slider("value", currentIdx);
+            ++step
+            setTimeout(animateSlider, stepDelayMs);
+          }
+        };
+        setTimeout(animateSlider, 100);
+              
+
+        dateSelector.slider("value", 0);
+        changeData(maxIdx);
+      });
+    </script>
+
+  </body>
+</html

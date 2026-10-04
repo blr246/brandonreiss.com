@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>Brandon L. Reiss -- Graphics -- Hw05</title>
+    <meta http-equiv='Content-type' content='text/html;charset=UTF-8'/>
+    <link rel='icon' href='/favicon.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
+    <link rel='stylesheet' type='text/css' href='/style.css'/>
+  </head>
+
+  <body>
+    <div id="table-art"></div>
+    <div id='nav'></div>
+
+    <div class='main'>
+      <div>
+        <p>
+          <applet code="Hw05" height="500" width="798"></applet>
+        </p>
+        <p><em>
+          Robot driving school.
+        </em></p>
+        <ul>
+          <li>Pickable objects (raytracing)</li>
+          <li>Interactive transformation</li>
+          <li>Hermite spline interpolation</li>
+        </ul>
+        <div id="instructions">
+          <h3>Instructions</h3>
+          <p>The robot drives along the light gray path. Click on the gray
+          control handles along the path to edit the path shape. Once selected,
+          the gray path control handle will become red and a 3d translation
+          gizmo will appear. Drag the control handle along any of the colored
+          translation axes to move in the direction of the highlighted axis.
+          When finished, deselect the control handle by clicking in an area of
+          empty space. The camera will remain paused as long as there is an
+          active selection.</p>
+        </div>
+      </div>
+      <div class="CodeLinks">
+        <p style="font-size: 0.8em">
+          All code written by Brandon Reiss unless otherwise noted.
+        </p>
+        <a href="./Hw05.zip">Hw05.zip</a> &mdash;
+        The full source archive<br>
+        <a href="./Axes.java">Axes.java</a> &mdash;
+        A 3d axes gizmo<br>
+        <a href="./BufferedApplet.java">BufferedApplet.java</a> &mdash;
+        Main applet class written by Ken Perlin<br>
+        <a href="./Dummy.java">Dummy.java</a> &mdash;
+        An invisible scene object<br>
+        <a href="./Geometry.java">Geometry.java</a> &mdash;
+        3d mesh primitives<br>
+        <a href="./HermiteInterpolation.java">HermiteInterpolation.java</a> &mdash;
+        Cubic Hermite Spline interpolation<br>
+        <a href="./Hw05.java">Hw05.java</a> &mdash;
+        Main Hw05 applet class<br>
+        <a href="./Interpolation.java">Interpolation.java</a> &mdash;
+        Function interpolation interface<br>
+        <a href="./LinearInterpolation.java">LinearInterpolation.java</a> &mdash;
+        Linear interpolation<br>
+        <a href="./Matrix4x4.java">Matrix4x4.java</a> &mdash;
+        A 4x4 matrix library<br>
+        <a href="./MatrixStack.java">MatrixStack.java</a> &mdash;
+        Matrix stack for rendering hierarchies<br>
+        <a href="./Mesh.java">Mesh.java</a> &mdash;
+        A 3d mesh<br>
+        <a href="./MouseMaster.java">MouseMaster.java</a> &mdash;
+        Mouse event registration manager<br>
+        <a href="./Pickable.java">Pickable.java</a> &mdash;
+        Interface for pickable object<br>
+        <a href="./PickableSceneObject.java">PickableSceneObject.java</a> &mdash;
+        A pickable scene object<br>
+        <a href="./Ray.java">Ray.java</a> &mdash;
+        A 3d ray<br>
+        <a href="./Renderer.java">Renderer.java</a> &mdash;
+        Generic mesh renderer<br>
+        <a href="./Robot.java">Robot.java</a> &mdash;
+        A robot character<br>
+        <a href="./SceneGraph.java">SceneGraph.java</a> &mdash;
+        A primitive scene graph<br>
+        <a href="./SceneObject.java">SceneObject.java</a> &mdash;
+        Transformable and renderable scene object<br>
+        <a href="./ScreenRayProjector.java">ScreenRayProjector.java</a> &mdash;
+        Project a 2d screen coordinate to a 3d ray<br>
+        <a href="./StaticInstanceMap.java">StaticInstanceMap.java</a> &mdash;
+        Instancing for 3d meshes<br>
+        <a href="./TransformGizmo.java">TransformGizmo.java</a> &mdash;
+        An interactive 3d translation gizmo<br>
+        <a href="./Util.java">Util.java</a> &mdash;
+        Rendering utility functions<br>
+        <a href="./Vector2.java">Vector2.java</a> &mdash;
+        A 2d vector libary<br>
+        <a href="./Vector3.java">Vector3.java</a> &mdash;
+        A 2d vector libary<br>
+        <a href="./Vector4.java">Vector4.java</a> &mdash;
+        A 4d vector library<br>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/gentable.js"></script>
+    <script type="text/javascript" src="/lib/default.js"></script>
+
+    <div style="height:2.5em;width:1px"></div>
+    <div class="footer">
+      <p>&copy; 2013-2015 Brandon L. Reiss</p>
+    </div>
+
+    </body>
+</html>
+

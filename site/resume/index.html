@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Brandon L. Reiss -- Resume</title>
+    <meta http-equiv='Content-type' content='text/html;charset=UTF-8'/>
+    <link rel='icon' href='/favicon.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
+    <link rel='stylesheet' type='text/css' href='/style.css'/>
+  </head>
+
+  <body>
+    <div id="table-art"></div>
+    <div id='nav'></div>
+
+    <div class='main'>
+      <div style='margin:10px 0px 0px 0px'>
+      <em>Use
+      <a href="resume.pdf">this link</a>
+      to download a PDF copy of this resume.</em>
+      <hr>
+      <div id="resume"></div>
+      <hr>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/gentable.js"></script>
+    <script type="text/javascript" src="/lib/default.js"></script>
+    <script type="text/javascript">
+      $("div#resume").ready(function() {
+        $.get("/resume/resume.html", function(data) {
+          $("div#resume").html(data);
+          // Give control back to browser, then resize art.
+          setTimeout(function() { TableGenerator.onWindowChanged(); }, 100);
+        });
+      })
+    </script>
+
+    <div style="height:2.5em;width:1px"></div>
+    <div class="footer">
+      <p>&copy; 2013-2015 Brandon L. Reiss</p>
+    </div>
+
+  </body>
+</html>
+

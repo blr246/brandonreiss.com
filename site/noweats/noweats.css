@@ -1,0 +1,82 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+table {
+  border-top: solid black 2px;
+  border-bottom: solid black 2px;
+}
+
+#counts th {
+  width: 50px;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  border-bottom: solid black 1px;
+}
+
+#counts th:hover {
+  background: LightGray;
+  cursor: pointer;
+}
+
+#counts td {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.count {
+  text-align: right;
+}
+
+#counts {
+  float: left;
+}
+
+#interesting {
+  left-padding: 10px;
+  float: left;
+}
+
+#left-spacer {
+  float: left;
+}
+
+blockquote {
+  font-size: 1.0em;
+  font-style: italic;
+}
+
+.footer {
+  text-align: center;
+}
