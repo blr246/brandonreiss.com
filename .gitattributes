@@ -1,0 +1,36 @@
+# Normalize every text file to LF, both in the repository and on checkout.
+#
+# The live site was imported with mixed line endings (15 CRLF files among 136
+# LF ones). Without this rule an editor that saves LF would report an entire
+# file as changed on the next commit, burying the real edit in noise.
+#
+# `text=auto` leaves detection to git, so binaries are never rewritten.
+* text=auto eol=lf
+
+# Shell scripts must be LF: bash chokes on a trailing ^M, and a Windows
+# checkout with core.autocrlf=true would otherwise reintroduce them.
+*.sh text eol=lf
+
+# Bytes that must round-trip exactly. Marked explicitly rather than relying
+# on auto-detection, because a corrupted image or font fails silently.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.pdf   binary
+*.zip   binary
+*.gz    binary
+*.tgz   binary
+*.tar   binary
+*.jar   binary
+*.class binary
+*.mp3   binary
+*.wav   binary
+*.ogg   binary
+*.mp4   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
