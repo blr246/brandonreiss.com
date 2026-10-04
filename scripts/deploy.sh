@@ -71,6 +71,20 @@ fi
 
 aws "${SYNC_ARGS[@]}"
 
+# --- cache headers ----------------------------------------------------------
+# `aws s3 sync` only uploads files whose bytes changed, so it never touches an
+# otherwise up-to-date object and would never apply (or update) its metadata.
+# This pass covers every file under dist/, reading each object's existing
+# Content-Type back from S3 so MIME types are preserved rather than re-sniffed.
+# It only ever lists files that exist in dist/, so noweats/data/ and private/
+# are never modified.
+echo
+if [[ "$DRY_RUN" -eq 1 ]]; then
+  node "$ROOT/scripts/set-cache.mjs" --dry-run
+else
+  node "$ROOT/scripts/set-cache.mjs"
+fi
+
 if [[ "$DRY_RUN" -eq 1 ]]; then
   echo
   echo "deploy: dry run complete. Nothing was uploaded."

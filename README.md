@@ -24,7 +24,8 @@ Edit anything under `site/`. The watcher rebuilds and the browser reloads.
 | `npm run build` | One-shot incremental build into `dist/` |
 | `npm run serve` | Static preview of `dist/`, no watching |
 | `npm run deploy:dry` | Show what `aws s3 sync` would transfer; touches nothing |
-| `npm run deploy` | Sync `dist/` → S3, then invalidate CloudFront |
+| `npm run deploy` | Sync `dist/` → S3, set cache headers, invalidate CloudFront |
+| `npm run set-cache` | Apply `Cache-Control` to every object already in the bucket |
 | `npm run clean` | Remove `dist/` |
 
 ## Layout
@@ -32,7 +33,7 @@ Edit anything under `site/`. The watcher rebuilds and the browser reloads.
 ```
 site/       source of truth — committed
 dist/       build output — gitignored, regenerated
-scripts/    build / dev / serve / proxy / deploy
+scripts/    build / dev / serve / proxy / deploy / set-cache
 ```
 
 ### What is *not* in this repo
@@ -94,14 +95,15 @@ To proxy another excluded path, add its prefix to `PROXY_PREFIXES` in
 ```bash
 npm run build
 npm run deploy:dry   # review
-npm run deploy       # sync + invalidate
+npm run deploy       # sync + cache headers + invalidate
 ```
 
 `scripts/deploy.sh`:
 
 1. Refuses to run unless the caller is account **814447972905**.
 2. `aws s3 sync dist/ s3://brandonreiss.com/`
-3. Invalidates CloudFront distribution **`EAW3ZQA2585VF`**
+3. Runs `scripts/set-cache.mjs` to apply `Cache-Control` to every object.
+4. Invalidates CloudFront distribution **`EAW3ZQA2585VF`**
    (`brandonreiss.com`, `www.brandonreiss.com`).
 
 Two things it deliberately does **not** do:
@@ -116,6 +118,36 @@ Two things it deliberately does **not** do:
 CloudFront caches for ~24h (observed age: 85131s ≈ 23.6h), so **skipping
 invalidation means changes stay invisible for up to a day**. Use
 `--no-invalidate` only when that is acceptable.
+
+### Cache headers
+
+`aws s3 sync` only uploads files whose bytes changed, so on its own it never
+updates metadata for an object that is otherwise up to date. `set-cache.mjs`
+closes that gap by walking `dist/` and rewriting `Cache-Control` on each
+object:
+
+| Kind | Policy | Why |
+| --- | --- | --- |
+| `*.html` (26 files) | `max-age=3600` | Cheap to revalidate; keeps returning visitors within an hour of a deploy |
+| everything else (148 files) | `max-age=86400` | Changes rarely, and CloudFront is invalidated on deploy |
+
+There is no asset fingerprinting (filenames are not hashed), so anything
+longer than a day would serve returning visitors stale CSS. CloudFront
+invalidation clears the *edge* but not a visitor's *browser* cache — these
+headers are what govern the latter.
+
+The script reads each object's existing `Content-Type` back from S3 instead of
+guessing it from the file extension, so MIME types are preserved exactly
+(`.js` files have drifted between `application/javascript` and
+`text/javascript` across past deploys). It only ever lists files present under
+`dist/`, so `noweats/data/` and `private/` are never touched.
+
+Verify with:
+
+```bash
+curl -sSI https://brandonreiss.com/ | grep -i cache-control
+curl -sSI https://brandonreiss.com/style.css | grep -i cache-control
+```
 
 ## Initial import
 

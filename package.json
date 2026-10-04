@@ -10,6 +10,7 @@
     "serve": "node scripts/serve.mjs",
     "deploy": "./scripts/deploy.sh",
     "deploy:dry": "./scripts/deploy.sh --dry-run",
+    "set-cache": "node scripts/set-cache.mjs",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
