@@ -124,7 +124,11 @@ TableGenerator = function() {
       var that = this;
       resetTable();
 
-      $(window).load(function() {
+      // `$(window).load()` was removed as an event shortcut in jQuery 3 and is
+      // undefined in the slim build, so on the homepage (the one page loading
+      // jQuery 3.7.1-slim) this threw a TypeError and killed start() before the
+      // ready handler below could register. `.on("load", …)` works on 1.7+.
+      $(window).on("load", function() {
         that.onWindowChanged();
       });
 
