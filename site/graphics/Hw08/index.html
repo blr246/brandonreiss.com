@@ -21,7 +21,12 @@
 
     <main class='main'>
       <div>
-        <p><applet code="Hw08" height="480" width="640"></applet></p>
+        <p>
+          <span class="applet-host" style="width:640px;height:480px">
+            <cheerpj-applet archive="Hw08.jar" code="Hw08" height="480" width="640"></cheerpj-applet>
+            <button class="applet-run" type="button">Run applet</button>
+          </span>
+        </p>
         <p><em>Classic rasterization.</em></p>
       </div>
       <ul>
@@ -38,6 +43,7 @@
     </main>
 
     <script type="text/javascript" src="/lib/gentable.js"></script>
+    <script type="text/javascript" src="/lib/applet.js" defer></script>
 
     </body>
 </html>

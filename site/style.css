@@ -83,6 +83,45 @@ p em {
 applet {
   border:1px solid;
 }
+/*
+ * Applet placeholder. CheerpJ hosts the demo in <cheerpj-applet>, which has no
+ * box of its own until the runtime loads, so the wrapper holds the space the
+ * demo will occupy -- otherwise the write-up below it jumps when it appears.
+ * Width and height are inline because they track the applet's own dimensions,
+ * which differ per homework.
+ */
+.applet-host {
+  display:block;
+  position:relative;
+  border:1px solid;
+}
+/*
+ * BufferedApplet renders into a BufferedImage built from getWidth()/getHeight(),
+ * so a collapsed element yields a collapsed image and a black box rather than
+ * an error anywhere. Fill the wrapper rather than trusting the browser to give
+ * an unknown element a size.
+ */
+.applet-host cheerpj-applet {
+  border:none;
+  display:block;
+  width:100%;
+  height:100%;
+}
+.applet-run {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  margin:0px;
+  padding:4px 14px;
+  font:inherit;
+  font-size:0.9em;
+  cursor:pointer;
+}
+.applet-run:disabled {
+  cursor:default;
+  opacity:0.7;
+}
 div.instructions {
   margin:-0.5em 0em 2em 0em;
   padding-left:4px;

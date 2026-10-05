@@ -22,7 +22,10 @@
     <main class='main'>
       <div>
         <p>
-          <applet code="Hw04" height="480" width="798"></applet>
+          <span class="applet-host" style="width:798px;height:480px">
+            <cheerpj-applet archive="Hw04.jar" code="Hw04" height="480" width="798"></cheerpj-applet>
+            <button class="applet-run" type="button">Run applet</button>
+          </span>
         </p>
         <p><em>
           Robot circus.
@@ -76,6 +79,7 @@
     </main>
 
     <script type="text/javascript" src="/lib/gentable.js"></script>
+    <script type="text/javascript" src="/lib/applet.js" defer></script>
 
     </body>
 </html>

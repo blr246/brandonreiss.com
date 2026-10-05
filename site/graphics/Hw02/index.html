@@ -21,7 +21,10 @@
 
     <main class='main'>
       <p>
-        <applet code="Hw02" height="540" width="798"></applet>
+        <span class="applet-host" style="width:798px;height:540px">
+          <cheerpj-applet archive="Hw02.jar" code="Hw02" height="540" width="798"></cheerpj-applet>
+          <button class="applet-run" type="button">Run applet</button>
+        </span>
       </p>
       <p><em>
         Flamingos dance in step to the hypnotic floating cubes.
@@ -68,6 +71,7 @@
     </main>
 
     <script type="text/javascript" src="/lib/gentable.js"></script>
+    <script type="text/javascript" src="/lib/applet.js" defer></script>
 
     </body>
 </html>

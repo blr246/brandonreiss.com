@@ -21,7 +21,12 @@
 
     <main class='main'>
       <div>
-        <p><applet code="Hw07a" height="256" width="256"></applet></p>
+        <p>
+          <span class="applet-host" style="width:256px;height:256px">
+            <cheerpj-applet archive="Hw07a.jar" code="Hw07a" height="256" width="256"></cheerpj-applet>
+            <button class="applet-run" type="button">Run applet</button>
+          </span>
+        </p>
         <p><em>Over 100g of boolean in every serving!</em></p>
         <ul>
           <li>Compound boolean geometry</li>
@@ -50,6 +55,7 @@
     </main>
 
     <script type="text/javascript" src="/lib/gentable.js"></script>
+    <script type="text/javascript" src="/lib/applet.js" defer></script>
 
     </body>
 </html>

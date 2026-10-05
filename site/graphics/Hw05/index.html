@@ -22,7 +22,10 @@
     <main class='main'>
       <div>
         <p>
-          <applet code="Hw05" height="500" width="798"></applet>
+          <span class="applet-host" style="width:798px;height:500px">
+            <cheerpj-applet archive="Hw05.jar" code="Hw05" height="500" width="798"></cheerpj-applet>
+            <button class="applet-run" type="button">Run applet</button>
+          </span>
         </p>
         <p><em>
           Robot driving school.
@@ -106,6 +109,7 @@
     </main>
 
     <script type="text/javascript" src="/lib/gentable.js"></script>
+    <script type="text/javascript" src="/lib/applet.js" defer></script>
 
     </body>
 </html>
