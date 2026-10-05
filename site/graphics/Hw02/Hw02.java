@@ -264,6 +264,8 @@ public class Hw02 extends BufferedApplet implements MouseMotionListener {
   }
 
   @Override
-  public void mouseDragged(MouseEvent e) {}
+  public void mouseDragged(MouseEvent e) {
+    mouseMoved(e);
+  }
 }
 
