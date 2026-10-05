@@ -35,12 +35,14 @@ function fail(msg) {
 /* ---------------------------------------------------------------- html ---- */
 
 // Pull out <div class="page"> ... </div>, counting nesting so the wrapper's own
-// closing tag is the one we stop at.
+// closing tag is the one we stop at. The pattern must swallow the closing ">"
+// as well as the tag name -- a \b boundary right after "div" ends the match
+// before it, which silently drops the ">" and leaves the div unclosed.
 function extractPage(html) {
   const open = html.search(/<div class="page"[^>]*>/);
   if (open < 0) fail(`no <div class="page"> found in ${path.join(SRC, "index.html")}`);
 
-  const tag = /<\/?div\b/g;
+  const tag = /<\/?div\b[^>]*>/g;
   tag.lastIndex = open;
   let depth = 0;
   let m;
