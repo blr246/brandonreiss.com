@@ -57,8 +57,9 @@ div.tg-b {
 
 #nav {
   font-family:sans-serif;
-  background-color:#ccccdd;
-  opacity:0.6;
+  /* Translucent background, not opacity on the bar: opacity fades the link
+     text along with it, putting #111 on #e0e0eb at 3.78:1. */
+  background-color:rgba(204, 204, 221, 0.6);
   color:white;
   margin:0px;
   overflow:hidden;
