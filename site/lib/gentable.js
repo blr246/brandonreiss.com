@@ -1,7 +1,8 @@
+// Table art: recursively subdivides a rectangle into ~600 random cells, forever.
 TableGenerator = function() {
 
   var DIVS = 600;
-  var TABLE = $("#table-art");
+  var TABLE = document.getElementById("table-art");
   var LEAVES = null;
   var MINAREA = 1.0 / DIVS;
   var NUMCELLS = 0;
@@ -21,12 +22,12 @@ TableGenerator = function() {
   }
 
   var partitionHelper = function(ele, pattern, partition) {
-    var parentArea = ele.data("area");
-    ele.append(pattern[0].replace("P", partition.toFixed(2)));
-    ele.append(pattern[1].replace("P", (100 - partition).toFixed(2)));
-    var appended = ele.children("div")
-    appended.eq(0).data("area", parentArea *        partition  * 0.01);
-    appended.eq(1).data("area", parentArea * (100 - partition) * 0.01);
+    var parentArea = ele._area;
+    ele.insertAdjacentHTML("beforeend", pattern[0].replace("P", partition.toFixed(2)));
+    ele.insertAdjacentHTML("beforeend", pattern[1].replace("P", (100 - partition).toFixed(2)));
+    var appended = ele.children;
+    appended[0]._area = parentArea *        partition  * 0.01;
+    appended[1]._area = parentArea * (100 - partition) * 0.01;
   };
 
   // Append random partition and allow split on cells with sufficient area.
@@ -64,12 +65,12 @@ TableGenerator = function() {
       appendPartition = appendRandMinarea;
     }
 
-    ASPECT = TABLE.width() / TABLE.height();
+    ASPECT = TABLE.clientWidth / TABLE.clientHeight;
 
-    TABLE.html("");
-    TABLE.data("area", 1.0);
+    TABLE.innerHTML = "";
+    TABLE._area = 1.0;
     appendPartition(TABLE);
-    LEAVES = TABLE.children("div");
+    LEAVES = Array.prototype.slice.call(TABLE.children);
     NUMCELLS = 2;
     setTimeout(splitCell, 0);
   }
@@ -83,8 +84,8 @@ TableGenerator = function() {
       indices[i] = i;
     }
     indices.sort(function(a, b) {
-      var aArea = LEAVES.eq(a).data("area");
-      var bArea = LEAVES.eq(b).data("area");
+      var aArea = LEAVES[a]._area;
+      var bArea = LEAVES[b]._area;
       if (bArea > aArea) {
         return 1;
       } else if (bArea < aArea) {
@@ -96,16 +97,19 @@ TableGenerator = function() {
 
     var rand = Math.random();
     var splitIdx = indices[Math.floor(LEAVES.length * rand * rand)];
-    var toSplit = LEAVES.eq(splitIdx);
+    var toSplit = LEAVES[splitIdx];
     appendPartition(toSplit);
 
     // Don't make too small cells eligible for splitting.
-    var toAdd = toSplit.children("div").filter(function(idx) {
-      return $(this).data("area") > MINAREA;
+    var kids = Array.prototype.slice.call(toSplit.children);
+    var toAdd = kids.filter(function(el) {
+      return el._area > MINAREA;
     });
-    LEAVES = LEAVES.add(toAdd);
 
-    LEAVES = LEAVES.not(":eq(" + splitIdx + ")");
+    // The children of the cell just split form a contiguous run starting at
+    // splitIdx, so swapping them in for it keeps LEAVES in document order.
+    LEAVES.splice(splitIdx, 1, ...toAdd);
+
     if (++NUMCELLS >= DIVS) {
       setTimeout(resetTable, COMPLETE_PAUSE);
     } else {
@@ -115,24 +119,21 @@ TableGenerator = function() {
 
   return {
      onWindowChanged: function() {
-      var bodyHeight = parseInt($("body").height());
-      var tableArtDefaultHeight = parseInt($("#table-art").height());
+      var bodyHeight = document.body.clientHeight;
+      var tableArtDefaultHeight = TABLE.clientHeight;
       var tableArtHeight = Math.max(bodyHeight + 25, tableArtDefaultHeight) + "px";
-      $("#table-art").height(tableArtHeight);
+      TABLE.style.height = tableArtHeight;
     },
     start: function() {
       var that = this;
       resetTable();
 
-      // `$(window).load()` was removed as an event shortcut in jQuery 3 and is
-      // undefined in the slim build, so on the homepage (the one page loading
-      // jQuery 3.7.1-slim) this threw a TypeError and killed start() before the
-      // ready handler below could register. `.on("load", …)` works on 1.7+.
-      $(window).on("load", function() {
+      // Recompute once the document is parsed, and again once images settle.
+      window.addEventListener("load", function() {
         that.onWindowChanged();
       });
 
-      $(document).ready(function() {
+      document.addEventListener("DOMContentLoaded", function() {
         that.onWindowChanged();
       });
     },
