@@ -5,7 +5,7 @@
   "description": "Source and build pipeline for https://brandonreiss.com",
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build-applets.mjs && node scripts/build.mjs",
     "dev": "node scripts/dev.mjs",
     "serve": "node scripts/serve.mjs",
     "deploy": "./scripts/deploy.sh",
