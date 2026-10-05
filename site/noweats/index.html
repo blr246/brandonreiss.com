@@ -124,11 +124,36 @@
 
       getDataList(function(dataList) {
         var lastLoaded = undefined;
+
+        // A data file is named <prefix>.<date id>, and a fragment link to a
+        // single hour carries that date id: /noweats/#2016-09-20_06 opens on
+        // that hour. The whole file name works as a fragment too.
+        var dateIdOf = function(entry) {
+          return entry.substring(entry.lastIndexOf(".") + 1);
+        };
+
+        var idxFromHash = function() {
+          var hash = window.location.hash.substring(1);
+          for (var i = 0; i < dataList.length; ++i) {
+            if (hash == dataList[i] || hash == dateIdOf(dataList[i])) {
+              return i;
+            }
+          }
+          return -1;
+        };
+
         var changeData = function(dataIdx) {
           var path = "data/" + dataList[dataIdx];
           if (path != lastLoaded) {
-            loadData(path); 
+            loadData(path);
             lastLoaded = path;
+            // replaceState, not pushState: the hour on screen should be
+            // shareable from the address bar without every step of a drag
+            // dropping an entry into the history.
+            if (window.history.replaceState) {
+              window.history.replaceState(
+                  null, "", "#" + dateIdOf(dataList[dataIdx]));
+            }
           }
         };
 
@@ -143,29 +168,35 @@
             }
         });
 
-        // Animate slider. Acceleration should get us across in animS.
-        //   0.5 * accel * animS^2 = maxIdx
-        //   accel = (2 * maxIdx) / animS
-        //   step = accel * stepDelayMs / 1000
-        var stepDelayMs = 20
-        var animS = 1.5
-        var accel = 2 * maxIdx / animS
-        var step = 0
-        var currentIdx = 0;
-        var animateSlider = function() {
-          if (currentIdx < maxIdx) {
-            t = step * stepDelayMs / 1000
-            currentIdx = Math.min(0.5 * accel * (t * t), maxIdx)
-            dateSelector.slider("value", currentIdx);
-            ++step
-            setTimeout(animateSlider, stepDelayMs);
-          }
-        };
-        setTimeout(animateSlider, 100);
-              
+        var hashIdx = idxFromHash();
+        if (hashIdx >= 0) {
+          // A shared link opens straight on its hour; no sweep.
+          dateSelector.slider("value", hashIdx);
+          changeData(hashIdx);
+        } else {
+          // Animate slider. Acceleration should get us across in animS.
+          //   0.5 * accel * animS^2 = maxIdx
+          //   accel = (2 * maxIdx) / animS
+          //   step = accel * stepDelayMs / 1000
+          var stepDelayMs = 20
+          var animS = 1.5
+          var accel = 2 * maxIdx / animS
+          var step = 0
+          var currentIdx = 0;
+          var animateSlider = function() {
+            if (currentIdx < maxIdx) {
+              t = step * stepDelayMs / 1000
+              currentIdx = Math.min(0.5 * accel * (t * t), maxIdx)
+              dateSelector.slider("value", currentIdx);
+              ++step
+              setTimeout(animateSlider, stepDelayMs);
+            }
+          };
+          setTimeout(animateSlider, 100);
 
-        dateSelector.slider("value", 0);
-        changeData(maxIdx);
+          dateSelector.slider("value", 0);
+          changeData(maxIdx);
+        }
       });
     </script>
 
