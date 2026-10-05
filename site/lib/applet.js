@@ -1,7 +1,8 @@
-// Loads CheerpJ on request rather than on page load. The runtime is a whole
-// JVM in WebAssembly -- megabytes -- so pulling it in unprompted would make
-// every reader pay for something they may never click, and would put its
-// startup work on the main thread while the page is still settling.
+// Loads CheerpJ when the button is pressed rather than on page load. The
+// runtime is a whole JVM in WebAssembly -- megabytes -- so loading it on every
+// page would make each reader download it for a demo they may never click, and
+// would run its start-up work on the main thread before the page has finished
+// loading.
 
 const CHEERPJ_LOADER = "https://cjrtnc.leaningtech.com/4.3/loader.js";
 
