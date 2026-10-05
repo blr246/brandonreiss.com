@@ -13,7 +13,7 @@
  * naive "rm -rf + copy" rewrites all 173 files on every save, which makes the
  * watcher fire hundreds of spurious reload events per keystroke.
  */
-import { cp, mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -43,6 +43,59 @@ async function walk(dir, base = dir, out = []) {
 const srcFiles = await walk(src);
 const destFiles = existsSync(dest) ? await walk(dest) : [];
 const destSet = new Set(destFiles);
+
+// --- nav ---------------------------------------------------------------------
+// The nav is hand-copied into every content page rather than templated, so
+// this is the only thing keeping those copies honest. It runs before anything
+// is written so a drifted build fails instead of shipping.
+const NAV_OPEN = `<nav id="nav">`;
+const NAV_CLOSE = "</nav>";
+
+const navVersions = new Map(); // normalised block -> files that carry it
+let navProblem = false;
+
+for (const rel of srcFiles) {
+  if (!rel.endsWith(".html")) continue;
+  const html = await readFile(path.join(src, rel), "utf8");
+
+  const open = html.indexOf(NAV_OPEN);
+  const close = open < 0 ? -1 : html.indexOf(NAV_CLOSE, open);
+  const block = open < 0 || close < 0 ? null : html.slice(open, close + NAV_CLOSE.length);
+  const linked = html.includes("/nav.css");
+
+  if (block === null && linked) {
+    console.error(`build: ${rel} links /nav.css but has no nav block`);
+    navProblem = true;
+    continue;
+  }
+  if (block !== null && !linked) {
+    console.error(`build: ${rel} has a nav block but no /nav.css link`);
+    navProblem = true;
+    continue;
+  }
+  if (block === null) continue;
+
+  const marks = block.match(/aria-current="page"/g);
+  if (marks && marks.length > 1) {
+    console.error(`build: ${rel} marks ${marks.length} links as the current page`);
+    navProblem = true;
+  }
+
+  const key = block.replace(/ aria-current="page"/g, "");
+  if (!navVersions.has(key)) navVersions.set(key, []);
+  navVersions.get(key).push(rel);
+}
+
+if (navVersions.size > 1) {
+  console.error(`build: nav markup has drifted into ${navVersions.size} versions:`);
+  let n = 0;
+  for (const files of navVersions.values()) {
+    console.error(`  version ${++n}:`);
+    for (const f of files) console.error(`    ${f}`);
+  }
+  navProblem = true;
+}
+if (navProblem) process.exit(1);
 
 let copied = 0;
 let skipped = 0;
