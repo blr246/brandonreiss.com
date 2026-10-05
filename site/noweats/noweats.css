@@ -78,3 +78,10 @@ blockquote {
 .footer {
   text-align: center;
 }
+
+/* Touch gestures on the date slider become mouse events in index.html;
+   touch-action leaves the gesture to that code instead of starting a
+   page scroll. */
+#date-selector {
+  touch-action: none;
+}

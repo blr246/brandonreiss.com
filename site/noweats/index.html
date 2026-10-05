@@ -168,6 +168,53 @@
             }
         });
 
+        // jQuery UI's slider listens only for mouse events, and dragging a
+        // finger produces none, so forward the gesture as the mouse events
+        // the slider expects. A touch stays bound to this element for the
+        // whole gesture even when the finger leaves it, and canceling it
+        // keeps the page from scrolling under the drag instead (noweats.css
+        // also sets touch-action: none here).
+        var activeTouch = null;
+        var forwardTouch = function(type, e, touch) {
+          e.target.dispatchEvent(new MouseEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+            button: 0,
+            buttons: type == "mouseup" ? 0 : 1
+          }));
+        };
+        var ourTouch = function(e) {
+          if (activeTouch == null) return null;
+          for (var i = 0; i < e.changedTouches.length; ++i) {
+            if (e.changedTouches[i].identifier == activeTouch) {
+              return e.changedTouches[i];
+            }
+          }
+          return null;
+        };
+        var sliderEl = dateSelector[0];
+        sliderEl.addEventListener("touchstart", function(e) {
+          if (activeTouch != null || e.changedTouches.length == 0) return;
+          activeTouch = e.changedTouches[0].identifier;
+          e.preventDefault();
+          forwardTouch("mousedown", e, e.changedTouches[0]);
+        }, { passive: false });
+        var duringTouch = function(type) {
+          return function(e) {
+            var touch = ourTouch(e);
+            if (touch == null) return;
+            e.preventDefault();
+            if (type == "mouseup") activeTouch = null;
+            forwardTouch(type, e, touch);
+          };
+        };
+        sliderEl.addEventListener("touchmove", duringTouch("mousemove"), { passive: false });
+        sliderEl.addEventListener("touchend", duringTouch("mouseup"), { passive: false });
+        sliderEl.addEventListener("touchcancel", duringTouch("mouseup"), { passive: false });
+
         var hashIdx = idxFromHash();
         if (hashIdx >= 0) {
           // A shared link opens straight on its hour; no sweep.
