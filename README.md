@@ -26,7 +26,37 @@ Edit anything under `site/`. The watcher rebuilds and the browser reloads.
 | `npm run deploy:dry` | Show what `aws s3 sync` would transfer; touches nothing |
 | `npm run deploy` | Sync `dist/` → S3, set cache headers, invalidate CloudFront |
 | `npm run set-cache` | Apply `Cache-Control` to every object already in the bucket |
+| `npm run sync-resume` | Pull the current resume in from its own repository |
 | `npm run clean` | Remove `dist/` |
+
+## Resume
+
+The resume is maintained in its own repository, `~/Documents/resume`, which owns
+the copy, the markup, the stylesheet, and the PDF build. It is deliberately not
+a git submodule: the markup and stylesheet both have to be rewritten to sit
+inside this site, so linking the repo would not remove the transformation step —
+it would only add submodule bookkeeping to every clone. To read from somewhere
+else:
+
+```sh
+RESUME_SRC=/path/to/resume npm run sync-resume
+```
+
+That regenerates three committed files:
+
+| File | What it is |
+| --- | --- |
+| `site/resume/resume.pdf` | byte-for-byte copy |
+| `site/resume/index.html` | the `.page` markup, injected between `<!-- resume:begin -->` and `<!-- resume:end -->` |
+| `site/resume/resume.css` | every selector re-scoped under `.resume` |
+
+Scoping is required because the source stylesheet was written for a standalone
+page: it sets `body`, `p`, and `h1-h3` globally, while `/resume/` also carries
+the site's navigation, footer, and table art. `:root` (design tokens) and
+`@page` (print geometry) pass through untouched.
+
+Edit the resume in its own repository, then re-run the command. The outputs are
+committed, so the site still builds without that checkout present.
 
 ## Layout
 

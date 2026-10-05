@@ -11,6 +11,7 @@
     "deploy": "./scripts/deploy.sh",
     "deploy:dry": "./scripts/deploy.sh --dry-run",
     "set-cache": "node scripts/set-cache.mjs",
+    "sync-resume": "node scripts/sync-resume.mjs",
     "clean": "rm -rf dist"
   },
   "devDependencies": {

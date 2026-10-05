@@ -1,121 +1,346 @@
- 
-/* start css.sty */
-.cmr-10x-x-109{}
-.cmbx-12x-x-120{font-size:130%; font-weight: bold;}
-.cmbx-12x-x-120{ font-weight: bold;}
-.cmbx-12{font-size:109%; font-weight: bold;}
-.cmbx-12{ font-weight: bold;}
-.cmsl-10x-x-109{font-style: oblique;}
-.cmsy-10x-x-109{}
-.cmtt-10x-x-109{font-family: monospace;}
-.cmti-10x-x-109{ font-style: italic;}
-p.noindent { text-indent: 0em }
-td p.noindent { text-indent: 0em; margin-top:0em; }
-p.nopar { text-indent: 0em; }
-p.indent{ text-indent: 1.5em }
-@media print {div.crosslinks {visibility:hidden;}}
-a img { border-top: 0; border-left: 0; border-right: 0; }
-center { margin-top:1em; margin-bottom:1em; }
-td center { margin-top:0em; margin-bottom:0em; }
-.Canvas { position:relative; }
-img.math{vertical-align:middle;}
-li p.indent { text-indent: 0em }
-li p:first-child{ margin-top:0em; }
-li p:last-child, li div:last-child { margin-bottom:0.5em; }
-li p~ul:last-child, li p~ol:last-child{ margin-bottom:0.5em; }
-.enumerate1 {list-style-type:decimal;}
-.enumerate2 {list-style-type:lower-alpha;}
-.enumerate3 {list-style-type:lower-roman;}
-.enumerate4 {list-style-type:upper-alpha;}
-div.newtheorem { margin-bottom: 2em; margin-top: 2em;}
-.obeylines-h,.obeylines-v {white-space: nowrap; }
-div.obeylines-v p { margin-top:0; margin-bottom:0; }
-.overline{ text-decoration:overline; }
-.overline img{ border-top: 1px solid black; }
-td.displaylines {text-align:center; white-space:nowrap;}
-.centerline {text-align:center;}
-.rightline {text-align:right;}
-div.verbatim {font-family: monospace; white-space: nowrap; text-align:left; clear:both; }
-.fbox {padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }
-div.fbox {display:table}
-div.center div.fbox {text-align:center; clear:both; padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }
-div.minipage{width:100%;}
-div.center, div.center div.center {text-align: center; margin-left:1em; margin-right:1em;}
-div.center div {text-align: left;}
-div.flushright, div.flushright div.flushright {text-align: right;}
-div.flushright div {text-align: left;}
-div.flushleft {text-align: left;}
-.underline{ text-decoration:underline; }
-.underline img{ border-bottom: 1px solid black; margin-bottom:1pt; }
-.framebox-c, .framebox-l, .framebox-r { padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }
-.framebox-c {text-align:center;}
-.framebox-l {text-align:left;}
-.framebox-r {text-align:right;}
-span.thank-mark{ vertical-align: super }
-span.footnote-mark sup.textsuperscript, span.footnote-mark a sup.textsuperscript{ font-size:80%; }
-div.tabular, div.center div.tabular {text-align: center; margin-top:0.5em; margin-bottom:0.5em; }
-table.tabular td p{margin-top:0em;}
-table.tabular {margin-left: auto; margin-right: auto;}
-td p:first-child{ margin-top:0em; }
-td p:last-child{ margin-bottom:0em; }
-div.td00{ margin-left:0pt; margin-right:0pt; }
-div.td01{ margin-left:0pt; margin-right:5pt; }
-div.td10{ margin-left:5pt; margin-right:0pt; }
-div.td11{ margin-left:5pt; margin-right:5pt; }
-table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }
-td.td00{ padding-left:0pt; padding-right:0pt; }
-td.td01{ padding-left:0pt; padding-right:5pt; }
-td.td10{ padding-left:5pt; padding-right:0pt; }
-td.td11{ padding-left:5pt; padding-right:5pt; }
-table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }
-.hline hr, .cline hr{ height : 1px; margin:0px; }
-.tabbing-right {text-align:right;}
-span.TEX {letter-spacing: -0.125em; }
-span.TEX span.E{ position:relative;top:0.5ex;left:-0.0417em;}
-a span.TEX span.E {text-decoration: none; }
-span.LATEX span.A{ position:relative; top:-0.5ex; left:-0.4em; font-size:85%;}
-span.LATEX span.TEX{ position:relative; left: -0.4em; }
-div.float, div.figure {margin-left: auto; margin-right: auto;}
-div.float img {text-align:center;}
-div.figure img {text-align:center;}
-.marginpar {width:20%; float:right; text-align:left; margin-left:auto; margin-top:0.5em; font-size:85%; text-decoration:underline;}
-.marginpar p{margin-top:0.4em; margin-bottom:0.4em;}
-table.equation {width:100%;}
-.equation td{text-align:center; }
-td.equation { margin-top:1em; margin-bottom:1em; } 
-td.equation-label { width:5%; text-align:center; }
-td.eqnarray4 { width:5%; white-space: normal; }
-td.eqnarray2 { width:5%; }
-table.eqnarray-star, table.eqnarray {width:100%;}
-div.eqnarray{text-align:center;}
-div.array {text-align:center;}
-div.pmatrix {text-align:center;}
-table.pmatrix {width:100%;}
-span.pmatrix img{vertical-align:middle;}
-div.pmatrix {text-align:center;}
-table.pmatrix {width:100%;}
-span.bar-css {text-decoration:overline;}
-img.cdots{vertical-align:middle;}
-.partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}
-.index-item, .index-subitem, .index-subsubitem {display:block}
-div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}
-div.caption span.id{font-weight: bold; white-space: nowrap; }
-h1.partHead{text-align: center}
-p.bibitem { text-indent: -2em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }
-p.bibitem-p { text-indent: 0em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }
-.paragraphHead, .likeparagraphHead { margin-top:2em; font-weight: bold;}
-.subparagraphHead, .likesubparagraphHead { font-weight: bold;}
-.quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify;}
-.verse{white-space:nowrap; margin-left:2em}
-div.maketitle {text-align:center;}
-h2.titleHead{text-align:center;}
-div.maketitle{ margin-bottom: 2em; }
-div.author, div.date {text-align:center;}
-div.thanks{text-align:left; margin-left:10%; font-size:85%; font-style:italic; }
-div.author{white-space: nowrap;}
-.quotation {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; }
-.abstract p {margin-left:5%; margin-right:5%;}
-div.abstract {width:100%;}
-.figure img.graphics {margin-left:10%;}
-/* end css.sty */
+/* Generated by scripts/sync-resume.mjs from /Users/brandon/Documents/resume on 2026-10-05.
+   Do not edit here -- change the source and re-run `npm run sync-resume`.
 
+   Selectors are scoped under .resume because the source stylesheet was written
+   for a standalone page and sets body, p, and h1-h3 globally, while this page
+   also carries the site's navigation, footer, and table art. */
+/* ---------------------------------------------------------------
+   Design tokens
+   --------------------------------------------------------------- */
+:root{
+  --ink:        #1c1c1c;   /* primary text            */
+  --ink-soft:   #4a4a4a;   /* secondary text          */
+  --ink-mute:   #6f6f6f;   /* dates, labels           */
+  --rule:       #d8d8d8;   /* hairlines               */
+  --rule-soft:  #e8e8e8;
+  --pipe:       #b5b5b5;   /* inline separators       */
+
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+          Arial, "Liberation Sans", sans-serif;
+
+  --page-w:    8.5in;
+  --page-h:    11in;
+  --page-pad:  0.5in;
+
+  --fs-name:   24pt;
+  --fs-h2:     11pt;
+  --fs-h3:     12pt;
+  --fs-body:   10pt;
+  --fs-small:  9.2pt;
+
+  --lh-body:   1.42;
+}
+
+/* ---------------------------------------------------------------
+   Reset / base
+   --------------------------------------------------------------- */
+.resume, .resume *{ box-sizing: border-box; }
+
+.resume{
+  margin: 0;
+  padding: 0;
+}
+
+.resume{
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.resume p{ margin: 0; }
+
+.resume h1, .resume h2, .resume h3{
+  margin: 0;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------
+   Page container (mirrors the printed page on screen)
+   --------------------------------------------------------------- */
+.resume .page{
+  width: var(--page-w);
+  max-width: 100%;
+  margin: 24px auto;
+  padding: var(--page-pad);
+  background: #fff;
+}
+
+/* ---------------------------------------------------------------
+   Masthead
+   --------------------------------------------------------------- */
+.resume .masthead{
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 16px;
+}
+
+.resume .masthead h1{
+  font-size: var(--fs-name);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.resume .contact{
+  margin-top: 7px;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.resume .contact > *{ vertical-align: middle; }
+
+.resume .contact a{
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.resume .contact a:hover{ color: var(--ink); }
+
+.resume .contact .sep{
+  margin: 0 8px;
+  color: var(--pipe);
+}
+
+.resume .contact .metro{
+  color: var(--ink-mute);
+}
+
+
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+.resume .section{ margin-bottom: 16px; }
+
+.resume .section-title{
+  font-size: var(--fs-h2);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.resume .summary{
+  color: var(--ink-soft);
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ---------------------------------------------------------------
+   Jobs
+   --------------------------------------------------------------- */
+.resume .job{ margin-bottom: 13px; }
+.resume .job:last-child{ margin-bottom: 0; }
+
+.resume .job-head{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 5px;
+}
+
+.resume .job-role h3{
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+}
+
+.resume .job-role .location{
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+.resume .pipe{
+  color: var(--pipe);
+  /* symmetric so the pipe sits centered in the gap on both sides */
+  margin: 0 2px;
+}
+
+.resume .job-title{
+  font-size: var(--fs-body);
+  color: var(--ink-soft);
+  margin-top: 1px;
+}
+
+.resume .job-dates{
+  flex: 0 0 auto;
+  font-size: var(--fs-small);
+  color: var(--ink-mute);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.resume .job-dates .note{
+  display: inline-block;
+  margin-left: 4px;
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------
+   Bullet lists
+   --------------------------------------------------------------- */
+.resume .bullets{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume .bullets li{
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 4px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.resume .bullets li:last-child{ margin-bottom: 0; }
+
+.resume .bullets li::before{
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.58em;
+  width: 4px;
+  height: 4px;
+  background: var(--ink-mute);
+  border-radius: 50%;
+}
+
+/* ---------------------------------------------------------------
+   Technical expertise: taxonomy style, category then members
+   --------------------------------------------------------------- */
+.resume .expertise{ margin: 0; }
+
+.resume .expertise-row{
+  display: block;
+  padding: 5px 0 5px 14px;
+  text-indent: -14px;      /* first line hangs left, wraps indent */
+}
+
+.resume .expertise-row:first-child{ padding-top: 0; }
+.resume .expertise-row:last-child{ padding-bottom: 0; }
+
+.resume .expertise-row dt{
+  display: inline;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* The arrow is real text in the markup (not CSS generated content) so that
+   PDF/HTML text extractors and screen readers see it. */
+.resume .expertise-row .arrow{
+  color: var(--pipe);
+  font-weight: 400;
+}
+
+.resume .expertise-row dd{
+  display: inline;
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.42;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------
+   Compact entries (early career, education)
+   --------------------------------------------------------------- */
+.resume .entry{ margin-bottom: 8px; }
+.resume .entry:last-child{ margin-bottom: 0; }
+
+.resume .entry-head{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.resume .entry-role{
+  font-weight: 600;
+}
+
+.resume .entry-meta{
+  flex: 0 0 auto;
+  font-size: var(--fs-small);
+  color: var(--ink-mute);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.resume .entry-body{
+  margin-top: 2px;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------
+   Screen: show a page edge when the viewport is tall enough
+   --------------------------------------------------------------- */
+@media screen{
+  .resume{ background: #f2f2f2; }
+  .resume .page{
+    min-height: var(--page-h);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Print / PDF
+   --------------------------------------------------------------- */
+@page{
+  size: Letter;
+  margin: var(--page-pad);
+}
+
+@media print{
+  .resume{ background: #fff; }
+
+  /* Keep links looking like plain text in the PDF */
+  .resume a{ color: inherit; text-decoration: none; }
+  .resume .contact a{ border-bottom: 0; }
+
+  .resume .page{
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    min-height: 0;
+    box-shadow: none;
+  }
+
+  /* Keep headings glued to their content */
+  .resume .section-title, .resume .job-head, .resume .entry-head{
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Add this class to any section to start it on a fresh page */
+  .resume .page-break{
+    break-before: page;
+    page-break-before: always;
+  }
+
+  /* Keep jobs intact across page breaks; bullets never split */
+  .resume .job, .resume .entry, .resume .expertise-row{
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .resume .bullets li{
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* The resume sits over the table-art backdrop rather than on one of its own, so
+   the standalone design's desk background, paper background, and page-edge
+   shadow are dropped. */
+.resume { background: transparent; }
+.resume .page { background: transparent; box-shadow: none; }

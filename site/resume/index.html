@@ -14,6 +14,7 @@
     <link rel='icon' href='/favicon.ico' type='image/x-icon' />
     <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
     <link rel='stylesheet' type='text/css' href='/style.css'/>
+    <link rel='stylesheet' type='text/css' href='resume.css'/>
   </head>
 
   <body>
@@ -22,27 +23,156 @@
 
     <main class='main'>
       <div style='margin:10px 0px 0px 0px'>
-      <em>Use
-      <a href="resume.pdf">this link</a>
-      to download a PDF copy of this resume.</em>
+      <p><a href="resume.pdf">Download this resume as a PDF</a>.</p>
       <hr>
-      <div id="resume"></div>
+      <div class="resume">
+      <!-- resume:begin -->
+<div class="page">
+
+  <header class="masthead">
+    <h1>Brandon Reiss</h1>
+    <p class="contact">
+      <span>Summit, NJ <span class="metro">(NYC metro)</span></span><span class="sep">|</span><a href="https://brandonreiss.com">brandonreiss.com</a><span class="sep">|</span><a href="https://www.linkedin.com/in/brandonreiss/">LinkedIn</a>
+    </p>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">Summary</h2>
+    <p class="summary">
+      Applied AI systems architect and former founder specializing in production ML platforms that handle real-world scale, latency, and cost constraints. Proven track record of operating autonomously to translate ambiguous R&amp;D bets into durable production systems, architecting high-throughput unstructured data intelligence layers, and advising executive leadership on company-wide AI strategy.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Experience</h2>
+
+    <article class="job">
+      <div class="job-head">
+        <div class="job-role">
+          <h3>HubSpot <span class="pipe">|</span> <span class="location">Remote</span></h3>
+          <p class="job-title">Staff Software Engineer</p>
+        </div>
+        <p class="job-dates">Jan 2025 &ndash; Present</p>
+      </div>
+      <ul class="bullets">
+        <li>Architect and top contributor for HubSpot&rsquo;s unstructured data intelligence layer processing ~200B tokens per day and ~30M globally distributed record update triggers (&gt;600 RPS peak) across 60M orchestrated extraction tasks, while maintaining p99 end-to-end latency under 4 minutes and unit costs below $0.001 per record.</li>
+        <li>Integrated unstructured context into flagship AI assistant, setting evaluation standards from experimentation to release; achieved &gt;30% daily traffic penetration with measurable lifts in CSAT and model quality benchmarks.</li>
+        <li>Designed company-wide unstructured content normalization and noise-filtering standards, significantly cutting inference token waste, reducing hallucinations, and establishing sustainable unit economics for LLM features.</li>
+        <li>Advise cross-organizational teams on AI platform standards, focusing on model evaluation methodology, inference cost optimization, and low-latency architectural reliability.</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-head">
+        <div class="job-role">
+          <h3>Frame AI <span class="pipe">|</span> <span class="location">New York, NY</span></h3>
+          <p class="job-title">Co-Founder / Principal Engineer / Director</p>
+        </div>
+        <p class="job-dates">Feb 2016 &ndash; Jan 2025 <span class="note">(Acquired by HubSpot)</span></p>
+      </div>
+      <ul class="bullets">
+        <li>Co-founded and served as principal architect from inception to acquisition by HubSpot, scaling an applied AI platform over 4 orders of magnitude to handle millions of monthly conversations powering dozens of process automations at a dozen mid-market and enterprise clients.</li>
+        <li>Provided technical leadership to lean engineering organization of 6 across full-stack, data engineering, R&amp;D, and forward-deployed functions, delivering major yearly product releases, weekly customizations, and a major white-label product integration with Twilio Flex.</li>
+        <li>Architected multi-stage ingestion, extraction, and synthesis pipelines processing continuous streams of customer interactions under demanding end-to-end SLAs.</li>
+        <li>Implemented task prioritization and deduplication strategies across heterogeneous computational workloads and multi-tenant fault isolation across service fleet.</li>
+        <li>Synthesized classical NLP and modern ML into configurable, cost-efficient production pipelines&mdash;unifying rules-based filtering, dependency parsing, sentence encoders, and LLMs into cohesive intelligence systems.</li>
+        <li>Engineered storage backends combining relational databases (PostgreSQL) for transactional state with columnar and distributed object/NoSQL storage (ClickHouse) for high-volume analytical workloads.</li>
+        <li>As Head of Security, successfully unlocked Fortune 100 go-to-market strategy by establishing comprehensive security, compliance, and risk management programs; achieved and maintained SOC 2 Type II certification for 5 consecutive years with zero notable exceptions, delivered HIPAA compliance, and cleared security audits.</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-head">
+        <div class="job-role">
+          <h3>Knewton <span class="pipe">|</span> <span class="location">New York, NY</span></h3>
+          <p class="job-title">Software Engineering Manager / Senior Engineer</p>
+        </div>
+        <p class="job-dates">Sep 2012 &ndash; Dec 2015</p>
+      </div>
+      <ul class="bullets">
+        <li>Selected by senior leadership to lead a high-performing team of 8 engineers within the Adaptive Learning division, bridging core R&amp;D with production engineering and setting technical execution standards.</li>
+        <li>Built low-latency (p99 &lt; 2 minutes) statistical inference engines and recommendation systems serving millions of students globally.</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-head">
+        <div class="job-role">
+          <h3>Organic Motion <span class="pipe">|</span> <span class="location">New York, NY</span></h3>
+          <p class="job-title">Software Engineer</p>
+        </div>
+        <p class="job-dates">Jan 2007 &ndash; Sep 2012</p>
+      </div>
+      <ul class="bullets">
+        <li>Developed low-latency computer vision algorithms and local network distributed systems for markerless motion capture and clinical gait analysis.</li>
+        <li>Self-taught hardware and firmware development to produce custom PCBs mounted with rings of near-IR LEDs and programmable microcontroller.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Technical Expertise &amp; Core Competencies</h2>
+    <dl class="expertise">
+      <div class="expertise-row">
+        <dt>Agentic AI &amp; Compound Systems <span class="arrow">&rarr;</span></dt>
+        <dd>Token Budgeting &amp; Context Window Management, Tool &amp; Skill Architectures, Agent Task Performance Evaluation &amp; Benchmarking, Task Aligned Data Retrieval, RAG.</dd>
+      </div>
+      <div class="expertise-row">
+        <dt>Applied AI / ML &amp; Statistical Inference <span class="arrow">&rarr;</span></dt>
+        <dd>Recommender &amp; Ranking Systems, Multi-Class Text Classification, Generalized Linear Models (GLMs), Signal Extraction &amp; Feature Engineering, Sentence Encoders, Clustering, Syntactic/Dependency Parsing, Classical NLP &amp; Rule-Based Heuristics.</dd>
+      </div>
+      <div class="expertise-row">
+        <dt>Distributed Systems &amp; Concurrency <span class="arrow">&rarr;</span></dt>
+        <dd>Low-Latency Event-Driven Architectures, Multi-Tenant Resiliency (Blast-Radius Isolation, Anti-Correlated Failure Design), Priority-Tiered Processing, Fault-Tolerant Distributed Queues &amp; Worker Architectures, Asynchronous / Parallel / Concurrent Execution Patterns, CPU &amp; Memory Profiling.</dd>
+      </div>
+      <div class="expertise-row">
+        <dt>Data Infrastructure &amp; Storage <span class="arrow">&rarr;</span></dt>
+        <dd>Relational Databases (PostgreSQL &amp; InnoDB Internals, Concurrency, Lock Mechanics, Indexing), Columnar OLAP Datastores, Distributed Storage (HBase, S3).</dd>
+      </div>
+      <div class="expertise-row">
+        <dt>Security, Compliance &amp; Governance <span class="arrow">&rarr;</span></dt>
+        <dd>SOC 2 Type II Program Architecture &amp; Audit Defense, HIPAA Compliance, Enterprise Security Reviews, Risk Management &amp; Data Governance, Application Security Testing.</dd>
+      </div>
+      <div class="expertise-row">
+        <dt>Languages &amp; Technical Tooling <span class="arrow">&rarr;</span></dt>
+        <dd>Python, C++, Java, SQL, Bash / Linux CLI Tools; broad polyglot proficiency across modern software stacks; agentic coding harnesses &amp; AI-assisted development workflows.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Early Career &amp; Applied Research</h2>
+    <div class="entry">
+      <p class="entry-head"><span class="entry-role">Undergraduate Research Assistant</span><span class="entry-meta">Rensselaer Polytechnic Institute (RPI)</span></p>
+      <p class="entry-body">Co-authored peer-reviewed research in Applied and Environmental Microbiology (April 2006, 72: 2460&ndash;2470) on isolating PCB-dechlorinating bacterial cultures using PCR, DNA sequence analysis, and gas chromatography.</p>
+    </div>
+    <div class="entry">
+      <p class="entry-head"><span class="entry-role">Engineering Intern</span><span class="entry-meta">BAE Systems</span></p>
+      <p class="entry-body">First high-school intern admitted in company history; designed a $300K RF-absorbent antenna test facility and conducted experimental classification of RF signal polarization using neural networks.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Education</h2>
+    <div class="entry">
+      <p class="entry-head"><span class="entry-role">M.S. in Computer Science</span><span class="entry-meta">New York University, Courant Institute of Mathematical Sciences</span></p>
+      <p class="entry-body">Recipient, Courant Hedwig Kurzbart Master&rsquo;s Fellowship (awarded annually for academic excellence)</p>
+    </div>
+    <div class="entry">
+      <p class="entry-head"><span class="entry-role">B.A. in Computer Science and Mathematics</span><span class="entry-meta">New York University, College of Arts and Science</span></p>
+      <p class="entry-body">Minor in Metropolitan Studies</p>
+    </div>
+  </section>
+
+</div
+    <!-- resume:end -->
+      </div>
       <hr>
       </div>
     </main>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="/lib/gentable.js"></script>
     <script type="text/javascript" src="/lib/default.js"></script>
-    <script type="text/javascript">
-      $("div#resume").ready(function() {
-        $.get("/resume/resume.html", function(data) {
-          $("div#resume").html(data);
-          // Give control back to browser, then resize art.
-          setTimeout(function() { TableGenerator.onWindowChanged(); }, 100);
-        });
-      })
-    </script>
 
     <div style="height:2.5em;width:1px"></div>
     <div class="footer">
