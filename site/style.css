@@ -13,6 +13,12 @@ div#table-art {
   left:0px;
   z-index:-1;
   border:1px solid #e0f3ff;
+  /* The artwork keeps its authored 798px square rather than shrinking to the
+     window. It is a background at z-index:-1, and html's overflow-x crops it
+     on narrow screens; shrinking it instead would change the box the
+     subdivision pattern is drawn in, and resizing that box after the first
+     paint moves every cell in it at once, which the layout-shift score picks
+     up. The 2px is this box's own border. */
   width:798px;
   height:798px;
   margin:0px;
@@ -55,13 +61,29 @@ div.tg-b {
  * Body, etc.
 */
 
+/*
+ * 800px is the maximum width of both, not a fixed size: max-width and the
+ * width:100% below follow the window when it is narrower than 800px and stop
+ * at 800px when it is wider. Allowing more than 800px would stretch the table
+ * artwork and the applet boxes, which have fixed sizes of their own.
+ *
+ * overflow-x stops the page scrolling sideways. The table artwork is kept at
+ * its authored 798px instead of being shrunk to fit, so on a narrow window it
+ * runs off the right edge; it is decoration at z-index:-1, so it is cropped
+ * rather than dragged along with the content. Everything else sizes itself to
+ * the window, so nothing a reader needs is cut off.
+ */
+html {
+  overflow-x: hidden;
+}
 body {
   margin:0;
-  width:800px;
+  max-width:800px;
 }
 .main {
   font-family:Times New Roman,Times,serif;
-  width:800px;
+  width:100%;
+  max-width:800px;
   display:inline-block;
   color:#555555;
 }
@@ -80,19 +102,24 @@ p em {
   font-family:monospace;
   margin-left:8px;
 }
-applet {
-  border:1px solid;
-}
 /*
  * Applet placeholder. CheerpJ hosts the demo in <cheerpj-applet>, which has no
  * box of its own until the runtime loads, so the wrapper holds the space the
  * demo will occupy -- otherwise the write-up below it jumps when it appears.
- * Width and height are inline because they track the applet's own dimensions,
- * which differ per homework.
+ *
+ * The width is inline and is the applet's own size, which differs per
+ * homework, so it sets the maximum: max-width can only make the box smaller,
+ * never larger, and a demo is never rendered wider than it was written for.
+ * That matters because BufferedApplet draws in software under WebAssembly,
+ * where every extra pixel is extra work each frame. aspect-ratio goes beside
+ * the width so the box keeps its proportions when it does get smaller;
+ * without it the box would stay full height at a narrower width. The 2px in
+ * max-width is this box's own border.
  */
 .applet-host {
   display:block;
   position:relative;
+  max-width:calc(100% - 2px);
   border:1px solid;
 }
 /*
@@ -100,8 +127,15 @@ applet {
  * so a collapsed element yields a collapsed image and a black box rather than
  * an error anywhere. Fill the wrapper rather than trusting the browser to give
  * an unknown element a size.
+ *
+ * Both selectors are required. Before the runtime starts, the child is the
+ * <cheerpj-applet> matched by the first; CheerpJ then replaces it with an
+ * <object>, and only the second matches that. Sizing whichever one happens to
+ * be present leaves the other at the size written in its width and height
+ * attributes, which would leave a demo wider than the box around it.
  */
-.applet-host cheerpj-applet {
+.applet-host cheerpj-applet,
+.applet-host > object {
   border:none;
   display:block;
   width:100%;

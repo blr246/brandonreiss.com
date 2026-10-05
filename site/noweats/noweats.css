@@ -61,6 +61,9 @@ table {
 #interesting {
   left-padding: 10px;
   float: left;
+  /* The 450px set in the markup is the maximum. On a narrower page the
+     quotes reflow to the space available instead of widening the page. */
+  max-width: 100%;
 }
 
 #left-spacer {

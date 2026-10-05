@@ -2,17 +2,17 @@
  * Navigation.
  *
  * Its own file because noweats runs on Bootstrap and cannot load style.css --
- * body{width:800px} and .main{width:800px} would wreck its fluid layout. Every
- * page links this alongside its own stylesheet, so the bar reads the same
- * everywhere, including which item is the one you are already on.
+ * that file sets body{max-width:800px} and styles .main, #table-art and the
+ * applet boxes, none of which noweats uses. Every page links this alongside
+ * its own stylesheet, so the bar looks the same everywhere, including which
+ * item is marked as the current page.
  */
 
 #nav {
   font-family:sans-serif;
-  /* Pinned so the bar does not inherit its host page's type. noweats runs on
+  /* Set explicitly so the bar is the same size on every page. noweats runs on
      Bootstrap, whose body sets font-size:14px and line-height:1.4286, and
-     whose html sets font-size:62.5% -- so 1rem would be 10px there. Elsewhere
-     these are what the bar already computed to. */
+     whose html sets font-size:62.5%, which would make 1rem equal 10px. */
   font-size:16px;
   line-height:normal;
   /* Translucent background, not opacity on the bar: opacity fades the link
@@ -38,13 +38,13 @@
   color:#111111;
   text-decoration:none;
 }
-/* Current page. Underline only: font-weight:bold would widen this cell and
-   shove every label after it, and because a different item is current on each
-   page they would land at different x positions page to page. There is no way
-   in CSS to reserve "the width bold would need", so it is weight off instead.
-   text-decoration paints without touching layout, and the white box stays
-   reserved for hover -- that is what keeps "you are here" and "under the
-   cursor" apart. */
+/* Current page: underline, not bold. Bold would make this cell wider than the
+   other labels and push every label after it to the right, so the bar would
+   line up differently on each page. CSS has no way to reserve the width bold
+   would take before it applies, so the font weight is left alone.
+   text-decoration does not change layout, and the white background is kept for
+   hover, so the current page and the item under the pointer stay easy to tell
+   apart. */
 #nav a[aria-current="page"] {
   text-decoration:underline;
 }

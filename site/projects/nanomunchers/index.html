@@ -42,6 +42,21 @@
       img.preview{
         border: solid black 2px;
         margin: 0.2em 0 0.2em 0;
+        /* The width="125px" attributes in the markup are invalid and ignored,
+           so these show at their natural size. Cap them at their box so a
+           narrow screen does not scroll sideways; border-box so the 2px black
+           border counts towards that box instead of being added on top. */
+        box-sizing: border-box;
+        max-width: 100%;
+        height: auto;
+      }
+      /* Raphael draws the board at a fixed 800x800 and the game reads its
+         coordinates from that size, so the board is not scaled. This box
+         takes the sideways scrolling itself instead of letting the whole
+         page scroll. */
+      #game-screen{
+        overflow-x: auto;
+        max-width: 100%;
       }
     </style>
   </head>
@@ -78,7 +93,7 @@
       <script>$(document).ready(function(){ GameUI.initialize() });</script>
 
       <div id='game-screen'></div>
-      <div style="width: 600px">
+      <div style="width:600px;max-width:100%">
         <p class="h1">Instructions</p>
         <p class="h2">Objective</p>
         <p class="desc">
