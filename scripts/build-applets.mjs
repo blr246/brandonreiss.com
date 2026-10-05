@@ -122,6 +122,57 @@ async function collectJava(dir) {
   return found;
 }
 
+/* ------------------------------------------------------- browser fix ------ */
+
+// BufferedApplet comes in three generations across these homeworks. Nine of
+// the ten sleep unconditionally in their render loop. Hw06 ships the later
+// Perlin version, which suppresses that sleep while dontSleep is set -- and
+// Hw06 is the only homework that sets it, because it renders a single
+// scanline per repaint and wanted the next one started immediately.
+//
+// That was safe in 2012, when appletviewer gave it a real EDT to paint on.
+// CheerpJ schedules the JVM cooperatively on the page's single JS thread, so a
+// Java loop that never blocks never yields: repaint() stops being delivered
+// and the demo freezes after its first scanline. Sleeping for a millisecond
+// gives the page its turn back without changing what the loop is for, and the
+// branch is dead code for the homeworks that never set dontSleep.
+//
+// The submitted source stays as submitted. This belongs beside --release 8
+// and the *Test.java filter as a fact about the runtime the jar is built for,
+// rather than a change to the assignment.
+const SPIN_LOOP =
+  /^([ \t]*)if \(!dontSleep && \(sleepMs > 0\)\) \{\r?\n[ \t]*t\.sleep\(sleepMs\);\r?\n[ \t]*\}/m;
+
+function yieldingLoop(indent) {
+  return [
+    `${indent}if (dontSleep) {`,
+    `${indent}  t.sleep(1);`,
+    `${indent}} else if (sleepMs > 0) {`,
+    `${indent}  t.sleep(sleepMs);`,
+    `${indent}}`,
+  ].join("\n");
+}
+
+async function applyYieldPatch(files) {
+  for (const file of files) {
+    if (path.basename(file) !== "BufferedApplet.java") continue;
+
+    const source = await readFile(file, "utf8");
+    if (!source.includes("dontSleep")) continue; // an older generation
+    if (/if \(dontSleep\) \{/.test(source)) continue; // already rewritten
+
+    const rewritten = source.replace(SPIN_LOOP, (_match, indent) => yieldingLoop(indent));
+    if (rewritten === source) {
+      throw new Error(
+        `${file} sets dontSleep but its render loop no longer matches the shape ` +
+          `this rewrite understands. Teach SPIN_LOOP the new shape rather than ` +
+          `ship a loop that never yields -- CheerpJ will freeze it on row one.`,
+      );
+    }
+    await writeFile(file, rewritten);
+  }
+}
+
 async function build(name, jdk) {
   const dir = path.join(GRAPHICS, name);
   const jar = path.join(dir, `${name}.jar`);
@@ -136,6 +187,8 @@ async function build(name, jdk) {
     if (existsSync(jar) && (await stat(jar)).mtimeMs > (await newest(source.inputs))) {
       return { name, skipped: true, reason: "up to date" };
     }
+
+    await applyYieldPatch(files);
 
     const out = await mkdtemp(path.join(os.tmpdir(), `${name}-out-`));
     try {
