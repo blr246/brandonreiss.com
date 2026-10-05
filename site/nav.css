@@ -1,0 +1,56 @@
+/*
+ * Navigation.
+ *
+ * Its own file because noweats runs on Bootstrap and cannot load style.css --
+ * body{width:800px} and .main{width:800px} would wreck its fluid layout. Every
+ * page links this alongside its own stylesheet, so the bar reads the same
+ * everywhere, including which item is the one you are already on.
+ */
+
+#nav {
+  font-family:sans-serif;
+  /* Pinned so the bar does not inherit its host page's type. noweats runs on
+     Bootstrap, whose body sets font-size:14px and line-height:1.4286, and
+     whose html sets font-size:62.5% -- so 1rem would be 10px there. Elsewhere
+     these are what the bar already computed to. */
+  font-size:16px;
+  line-height:normal;
+  /* Translucent background, not opacity on the bar: opacity fades the link
+     text along with it, putting #111 on #e0e0eb at 3.78:1. */
+  background-color:rgba(204, 204, 221, 0.6);
+  color:white;
+  margin:0px;
+  overflow:hidden;
+}
+#nav a {
+  padding:0px 10px 0px 10px;
+}
+#nav div {
+  display:table-cell;
+  padding:10px 0px 10px 0px;
+  margin:0px;
+}
+#nav a:link {
+  color:#111111;
+  text-decoration:none;
+}
+#nav a:visited {
+  color:#111111;
+  text-decoration:none;
+}
+/* Current page. Underline only: font-weight:bold would widen this cell and
+   shove every label after it, and because a different item is current on each
+   page they would land at different x positions page to page. There is no way
+   in CSS to reserve "the width bold would need", so it is weight off instead.
+   text-decoration paints without touching layout, and the white box stays
+   reserved for hover -- that is what keeps "you are here" and "under the
+   cursor" apart. */
+#nav a[aria-current="page"] {
+  text-decoration:underline;
+}
+#nav a:hover, #nav a:focus, #nav a:active {
+  background-color:white;
+  color:#555555;
+  text-decoration:underline;
+  padding: 10px;
+}

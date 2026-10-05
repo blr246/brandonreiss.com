@@ -52,42 +52,6 @@ div.tg-b {
 }
 
 /*
- * Navigation.
-*/
-
-#nav {
-  font-family:sans-serif;
-  /* Translucent background, not opacity on the bar: opacity fades the link
-     text along with it, putting #111 on #e0e0eb at 3.78:1. */
-  background-color:rgba(204, 204, 221, 0.6);
-  color:white;
-  margin:0px;
-  overflow:hidden;
-}
-#nav a {
-  padding:0px 10px 0px 10px;
-}
-#nav div {
-  display:table-cell;
-  padding:10px 0px 10px 0px;
-  margin:0px;
-}
-#nav a:link {
-  color:#111111;
-  text-decoration:none;
-}
-#nav a:visited {
-  color:#111111;
-  text-decoration:none;
-}
-#nav a:hover, #nav a:focus, #nav a:active {
-  background-color:white;
-  color:#555555;
-  text-decoration:underline;
-  padding: 10px;
-}
-
-/*
  * Body, etc.
 */
 
