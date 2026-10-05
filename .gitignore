@@ -14,6 +14,9 @@ npm-debug.log*
 .idea/
 .vscode/
 
+# Working notes — project rules live in AGENTS.md
+TODO.md
+
 # Never commit the large datasets mirrored from S3
 site/noweats/data/
 site/private/
