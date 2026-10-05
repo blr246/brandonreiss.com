@@ -126,15 +126,28 @@ TableGenerator = function() {
     },
     start: function() {
       var that = this;
+
+      // The box is sized from the body, so it can still grow while the rest of
+      // the page is finishing. Growing it would move every cell already in it,
+      // which scores as a layout shift, so fit the box first and start the
+      // drawing over whenever it changes: cells are then drawn at their final
+      // size instead of moved into it.
+      var fit = function() {
+        var before = TABLE.clientHeight;
+        that.onWindowChanged();
+        return TABLE.clientHeight !== before;
+      };
+
+      fit();
       resetTable();
 
       // Recompute once the document is parsed, and again once images settle.
-      window.addEventListener("load", function() {
-        that.onWindowChanged();
+      document.addEventListener("DOMContentLoaded", function() {
+        if (fit()) resetTable();
       });
 
-      document.addEventListener("DOMContentLoaded", function() {
-        that.onWindowChanged();
+      window.addEventListener("load", function() {
+        if (fit()) resetTable();
       });
     },
   };

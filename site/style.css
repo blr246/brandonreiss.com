@@ -13,13 +13,12 @@ div#table-art {
   left:0px;
   z-index:-1;
   border:1px solid #e0f3ff;
-  /* The artwork keeps its authored 798px square rather than shrinking to the
-     window. It is a background at z-index:-1, and html's overflow-x crops it
-     on narrow screens; shrinking it instead would change the box the
-     subdivision pattern is drawn in, and resizing that box after the first
-     paint moves every cell in it at once, which the layout-shift score picks
-     up. The 2px is this box's own border. */
+  /* 798px is the maximum width, not a fixed size: max-width below takes over
+     whenever the page is narrower, so the artwork shrinks to fit and the page
+     has nothing to scroll sideways. The 2px is this box's own border; without
+     it the border would stick out past the right edge on a narrow window. */
   width:798px;
+  max-width:calc(100% - 2px);
   height:798px;
   margin:0px;
   padding:0px;
@@ -67,11 +66,11 @@ div.tg-b {
  * at 800px when it is wider. Allowing more than 800px would stretch the table
  * artwork and the applet boxes, which have fixed sizes of their own.
  *
- * overflow-x stops the page scrolling sideways. The table artwork is kept at
- * its authored 798px instead of being shrunk to fit, so on a narrow window it
- * runs off the right edge; it is decoration at z-index:-1, so it is cropped
- * rather than dragged along with the content. Everything else sizes itself to
- * the window, so nothing a reader needs is cut off.
+ * overflow-x stops the page scrolling sideways. The table artwork shrinks to
+ * fit, so as things stand nothing runs past the edge and this changes nothing;
+ * it is there so a wide element added later cannot put a horizontal scrollbar
+ * back on a phone. Everything else sizes itself to the window, so nothing
+ * a reader needs is cut off.
  */
 html {
   overflow-x: hidden;
