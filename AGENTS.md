@@ -20,7 +20,9 @@ homework applets run in modern browsers through CheerpJ.
 - Applet boxes may only shrink, never grow. The `width`/`height` attributes in
   the applet HTML are the maximum size — extra pixels cost software-rasteriser
   performance — and CSS may add `aspect-ratio` or a smaller `max-width` so the
-  box fits narrow screens.
+  box fits narrow screens. Pressing Run pins the box's size for the rest of the
+  page load (`pinAppletBox()` in `site/lib/applet.js`): CheerpJ stops painting
+  if the box changes size while the runtime is going.
 - Do not spend effort optimizing the homework applets' rendering performance
   further. Known limits (Hw03's fixed 30ms sleep, Hw07a's thread pool) are
   accepted as they stand.

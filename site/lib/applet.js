@@ -30,10 +30,28 @@ function loadCheerpJ() {
   return loading;
 }
 
+// CheerpJ stops painting if the applet's box changes size after the runtime
+// has started: the canvas stays white and, on a phone, the page stops
+// responding. Turning the phone while a demo runs changes the box, so the run
+// begins by giving the box a final size. It is cut down to the smaller window
+// dimension on the way, so the same box still fits after the phone is turned.
+function pinAppletBox(button) {
+  const host = button.closest(".applet-host");
+  if (!host) return;
+  const doc = document.documentElement;
+  const rect = host.getBoundingClientRect();
+  const fit = Math.min(doc.clientWidth, doc.clientHeight) - rect.left;
+  const width = Math.max(1, Math.min(host.offsetWidth, fit));
+  host.style.boxSizing = "border-box";
+  host.style.width = width + "px";
+  host.style.maxWidth = "none";
+}
+
 for (const button of document.querySelectorAll(".applet-run")) {
   button.addEventListener("click", () => {
     button.disabled = true;
     button.textContent = "Starting\u2026";
+    pinAppletBox(button);
     loadCheerpJ().then(
       () => button.remove(),
       (error) => {
